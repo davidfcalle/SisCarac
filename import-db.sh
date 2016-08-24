@@ -1,0 +1,1 @@
+docker exec -i prosofidb mysql -uroot -pPROSOFI2015CAR test < tut_backup.sql

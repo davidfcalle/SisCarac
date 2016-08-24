@@ -1,0 +1,16 @@
+prosofidb:
+  image: mysql:5.5
+  environment:
+    MYSQL_ROOT_PASSWORD: PROSOFI2015CAR
+prosofi:
+  build: .
+  ports:
+    - 80:80
+  environment:
+    WORDPRESS_DB_HOST: prosofidb
+    WORDPRESS_DB_USER: root
+    WORDPRESS_DB_PASSWORD: PROSOFI2015CAR
+  links:
+    - prosofidb
+  volumes:
+    -  ./html:/var/www/html/
