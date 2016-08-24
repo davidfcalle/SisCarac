@@ -12,5 +12,3 @@ prosofi:
     WORDPRESS_DB_PASSWORD: PROSOFI2015CAR
   links:
     - prosofidb
-  volumes:
-    -  ./html:/var/www/html/
