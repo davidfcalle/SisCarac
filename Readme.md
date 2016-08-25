@@ -1,0 +1,1 @@
+# Sistema de Caraterización de la comunidad. Prosofi.

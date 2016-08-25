@@ -3,27 +3,15 @@ MAINTAINER David Calle "davidfcalle@gmail.com"
 
 #cliente de mysql
 RUN apt-get update && \
-    apt-get install -y mysql-client libmysqlclient-dev \ 
-    && docker-php-ext-install mysqli
+    apt-get install -y mysql-client libmysqlclient-dev php5-gd php5-mysql  php-pear php5-dev libmysqlclient15-dev && \
+    pecl install pdo && pecl install pdo_mysql \ 
+    && docker-php-ext-install mysql mysqli pdo pdo_mysql
 
-#dependencias para simplificar el Dockerfile
-RUN apt-get install -y git unzip
+#dependencias para simplificar el uso del contenedor en el futuro
+RUN apt-get install -y git unzip wget
 
-WORKDIR /php-reports
-#instalación de composer para gestionar las dependencias de php
-RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
-
-#instalación de php reports
-RUN git clone https://github.com/jdorn/php-reports.git
-
-#instalación de dependencias de PHP reports
-WORKDIR /php-reports/php-reports
-RUN composer install && cp config/config.php.sample config/config.php  
-
-#configuración del servidor apache
+#configuración del servidor apache, se hace explícito para que el desarrollador lo tenga en cuenta y lo pueda cambiar
 ADD apache2.conf /etc/apache2/apache2.conf
 
-#Se agrega la aplicación al contenedor
+#Se agrega la aplicación al contenedor, reportico 4.4 viene como una carpeta dentro de html para evitar problemas de dependencias 
 ADD html /var/www/html/
-
-RUN cp -r /php-reports/php-reports /var/www/html/php-reports
